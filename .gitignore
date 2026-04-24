@@ -1,0 +1,6 @@
+node_modules/
+cypress/videos/
+cypress/screenshots/
+
+# IMPORTANTE: este arquivo contém credenciais — nunca suba para o repositório
+cypress.env.json

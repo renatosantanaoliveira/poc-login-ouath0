@@ -1,0 +1,12 @@
+{
+  "name": "poc-login-ouath0",
+  "version": "1.0.0",
+  "description": "POC de automação de login com Cypress 15 e Auth0",
+  "scripts": {
+    "test": "cypress run --browser chrome --spec cypress/e2e/login.cy.js",
+    "test:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "15.13.0"
+  }
+}
