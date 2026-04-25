@@ -1,6 +1,14 @@
 node_modules/
-cypress/videos/
-cypress/screenshots/
 
-# IMPORTANTE: este arquivo contém credenciais — nunca suba para o repositório
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+.env
+.env.*
 cypress.env.json
+
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

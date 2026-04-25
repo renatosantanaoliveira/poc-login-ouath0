@@ -1,58 +1,76 @@
-# POC — Login Automatizado com Cypress 15 + Auth0
+# POC Login Auth0 com Cypress
 
-## Pré-requisitos
+Projeto de exemplo para automatizar uma tela de login Auth0 usando Cypress com JavaScript.
 
-- Node.js 18+
-- npm
+## Requisitos
 
----
+- Node.js instalado
+- npm instalado
+- Acesso ao usuario de teste do Auth0
 
-## 1. Instalar dependências
+## Instalar dependencias
+
+Na raiz do projeto, execute:
 
 ```bash
 npm install
 ```
 
----
+## Configurar credenciais locais
 
-## 2. Configurar as variáveis
+Crie um arquivo chamado `cypress.env.json` na raiz do projeto.
 
-Abra o arquivo `cypress.env.json` e preencha cada valor:
+Use o formato abaixo:
 
-| Variável | O que colocar |
-|---|---|
-| `AUTH0_LOGIN_URL` | URL completa com `?state=` fixo |
-| `AUTH0_USERNAME` | E-mail de login |
-| `AUTH0_PASSWORD` | Senha |
-| `SELECTOR_USERNAME` | Seletor do campo e-mail na tela Auth0 |
-| `SELECTOR_PASSWORD` | Seletor do campo senha na tela Auth0 |
-| `SELECTOR_SUBMIT` | Seletor do botão de entrar |
-| `SELECTOR_POST_LOGIN` | Seletor de elemento visível após o login |
+```json
+{
+  "auth0Email": "seu-email@empresa.com",
+  "auth0Password": "sua-senha"
+}
+```
 
-Abra também o `cypress.config.js` e altere o `baseUrl` para a URL da sua aplicação.
+Esse arquivo nao deve ser enviado para o Git, pois contem dados sensiveis.
+Ele ja esta listado no `.gitignore`.
 
-> **Atenção:** `cypress.env.json` está no `.gitignore` e **não deve ser versionado**, pois contém credenciais.
+## Abrir o Cypress
 
----
+Para abrir o Cypress em modo interativo:
 
-## 3. Rodar os testes
+```bash
+npm run cy:open
+```
 
-**Modo headless (CI/terminal):**
+Depois selecione:
+
+1. E2E Testing
+2. O navegador desejado
+3. O arquivo `login.cy.js`
+
+## Rodar os testes em modo headless
+
+Para executar os testes direto pelo terminal:
+
 ```bash
 npm test
 ```
 
-**Modo interativo (abre o Cypress):**
+Ou:
+
 ```bash
-npm run test:open
+npm run cy:run
 ```
 
----
+## Estrutura principal
 
-## Como funciona
+- `cypress/e2e/login.cy.js`: testes da tela de login
+- `cypress/support/commands.js`: comando customizado para realizar login
+- `cypress.config.js`: configuracao base do Cypress
+- `cypress.env.json`: credenciais locais, ignorado pelo Git
+- `cypress.env.example.json`: exemplo do formato esperado
 
-1. `cy.loginAuth0()` visita a URL do Auth0 com o `?state` fixo
-2. `cy.origin()` interage com o formulário de login no domínio `auth0.com`
-3. Após autenticar, o Auth0 redireciona de volta para a aplicação
-4. `cy.session()` cacheia os cookies/tokens — o login é feito só uma vez por sessão
-5. O teste verifica que o elemento pós-login está visível
+## Observacoes
+
+A URL de login usada no teste contem parametros OAuth/OIDC, como `state`, `nonce` e `code_challenge`.
+Se a tela nao carregar, pode ser necessario atualizar a URL no arquivo `cypress/e2e/login.cy.js`.
+
+Caso o login exija MFA, captcha ou alguma validacao adicional do Auth0, o teste pode precisar de ajustes.
