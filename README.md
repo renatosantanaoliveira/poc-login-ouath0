@@ -68,6 +68,19 @@ npm run cy:run
 - `cypress.env.json`: credenciais locais, ignorado pelo Git
 - `cypress.env.example.json`: exemplo do formato esperado
 
+## Praticas aplicadas
+
+- O `baseUrl` aponta para a aplicacao principal: `https://eaglepro.dev.protege.com.br`.
+- A URL do Auth0 fica no spec de login porque este teste valida especificamente o fluxo de autenticacao.
+- As credenciais ficam fora do codigo, no arquivo local `cypress.env.json`.
+- O comando customizado `cy.loginAuth0()` concentra apenas as acoes de preenchimento e envio do formulario.
+- As assertivas ficam no arquivo de teste.
+- O login com sucesso valida o redirecionamento para o Dashboard:
+
+```text
+https://eaglepro.dev.protege.com.br/gestao-mapa/dashboard/mapas-financeiros/
+```
+
 ## Observacoes
 
 A URL de login usada no teste contem parametros OAuth/OIDC, como `state`, `nonce` e `code_challenge`.
